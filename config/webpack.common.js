@@ -32,14 +32,11 @@ module.exports = {
                 loader: 'file-loader?name=assets/[name].[hash].[ext]'
             },
             {
-                test: /\.css$/,
-                exclude: helpers.root('src', 'app'),
-                loader: ExtractTextPlugin.extract({ fallbackLoader: 'style-loader', loader: 'css-loader?sourceMap' })
-            },
-            {
-                test: /\.css$/,
-                include: helpers.root('src', 'app'),
-                loader: 'raw-loader'
+                test: /\.(css|scss)$/,
+                loaders: ['to-string-loader'].concat(ExtractTextPlugin.extract({
+                    fallback: "style-loader",
+                    use: ['css-loader?sourceMap', 'sass-loader?sourceMap']
+                }))
             }
         ]
     },
