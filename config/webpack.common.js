@@ -1,7 +1,7 @@
 var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
-var helpers = require('./helpers');
+var path = require('path');
 
 module.exports = {
     entry: {
@@ -33,7 +33,7 @@ module.exports = {
             },
             {
                 test: /\.(css|scss)$/,
-                loaders: ['to-string-loader'].concat(ExtractTextPlugin.extract({
+                use: ['to-string-loader'].concat(ExtractTextPlugin.extract({
                     fallback: "style-loader",
                     use: ['css-loader?sourceMap', 'sass-loader?sourceMap']
                 }))
@@ -46,7 +46,7 @@ module.exports = {
         new webpack.ContextReplacementPlugin(
             // The (\\|\/) piece accounts for path separators in *nix and Windows
             /angular(\\|\/)core(\\|\/)@angular/,
-            helpers.root('./src'), // location of your src
+            path.resolve(__dirname, '../src'),
             {} // a map of your routes
         ),
 
